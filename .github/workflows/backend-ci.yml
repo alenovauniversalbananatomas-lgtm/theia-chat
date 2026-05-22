@@ -1,0 +1,22 @@
+name: Backend CI
+on:
+  push:
+    branches: [ main, initial-setup ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  install-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+      - name: Run migrations (dry)
+        working-directory: backend
+        run: echo "Skipping migrations in CI by default"
